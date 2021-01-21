@@ -1,14 +1,15 @@
 package server
 
-import(
-  "testing"
+import (
+	"testing"
 
-  "github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestConfiguration(t *testing.T) {
-  config := DefaultConfiguration()
+	config := DefaultConfiguration()
 
-  assert.Equal(t, BoltStore, config.StoreType)
-  assert.Equal(t, DefaultServerPort, config.Port)
+	assert.Equal(t, MapStoreType, config.StoreType)
+	assert.Equal(t, DefaultStoreConnectionString, config.StoreConnectionString)
+	assert.Equal(t, DefaultServerPort, config.Port)
 }
