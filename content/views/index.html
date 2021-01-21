@@ -1,0 +1,43 @@
+<div class="container">
+  <header>
+    <h2>Lynx</h2>
+    <p>Find. Fast.</p>
+  </header>
+  <main>
+    <div class="search-query">
+      <div id="app">
+        <form class="pure-form" v-on:submit.prevent>
+          <input type="text" class="pure-input search-input"
+            v-model="bait"
+            placeholder="enter a search, shortcut or command"
+            v-on:keydown.enter.prevent="hunt">
+          <button class="pure-button pure-button-primary"
+          v-on:click="hunt">Go</button>
+        </form>
+      </div>
+    </div>
+    <div class="search-intro">
+      <p>Here are some things you can do.</p>
+      <div class="examples">
+        <p>
+          Direct Searches:<br>
+          <code>17drmHLZMsCRWz48RchWfrz9Chx1osLe67</code> <i>bitcoin address</i><br>
+          <code>@skylar</code> <i>twitter profile</i><br>
+        </p>
+        <p>
+          Shortcuts :
+          <code>cal</code>,
+          <code>mail</code>
+        </p>
+        <p>
+          Commands, Searches : <br>
+          <code>twitter drake</code><br>
+          <code>wiki bananas</code><br>
+          <code>g what is the capital of Alaska</code><br>
+          <code>zoom 2345551212</code><br>
+        </p>
+      </div>
+      <p><a href="/list">Explore all the commands.</a></p>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,61 @@
+body {
+  margin: auto;
+  max-width: 40em;
+}
+header {
+  margin: 4em auto 1em;
+  text-align: center;
+}
+header h2, header p {
+  padding: 0;
+  margin: 0 0 5px 0;
+}
+a {
+  color :rgb(218, 146, 79);
+}
+
+.pure-button {
+  border-radius: 2px;
+}
+.pure-button-primary {
+  background: rgb(218, 146, 79);
+}
+
+.search-primary {
+  margin: auto;
+  padding: 1em;
+}
+.search-primary .pure-form {
+  max-width: 35em;
+  padding-left: 2em;
+  text-align: center;
+  width: 90%;
+  white-space: nowrap;
+}
+.search-input {
+  width: 90%;
+}
+.search-examples {
+}
+.examples {
+  font-size: 90%;
+}
+.examples code {
+  color : rgb(79, 91, 110);
+}
+
+.command-list dt {
+  color : rgb(218, 146, 79);
+  font-size: 140%;
+  font-weight: bold;
+  font-family: monospace;
+  margin-top: 1.8em;
+}
+.command-list dt > .aliases {
+  font-weight: normal;
+  font-size: 90%;
+}
+.command-list dd {
+  margin-inline-start: 1em;
+  padding-top: 1em;
+}

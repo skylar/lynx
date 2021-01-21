@@ -1,0 +1,13 @@
+# Binaries for programs and plugins
+lynx
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# OS Artifacts
+.DS_Store

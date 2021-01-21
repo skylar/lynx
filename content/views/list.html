@@ -1,0 +1,21 @@
+<div class="container">
+  <main>
+    <h2> Commands </h2>
+
+    <p>{{commandCount}} commands are available.</p>
+
+    <dl class="command-list">
+      {{#each commands}}
+        <dt>
+          {{GetName}}
+          <span class="aliases">
+            {{#each GetNicknames}}
+              {{ this }}
+            {{/each}}
+          </span>
+        </dt>
+        <dd>{{GetDescription}}</dd>
+      {{/each}}
+    </dl>
+  </main>
+</div>
