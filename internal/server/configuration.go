@@ -3,7 +3,7 @@ package server
 type StoreType int
 
 const DefaultServerPort = "9090"
-const DefaultStoreConnectionString = "none"
+const DefaultStoreConnectionString = "lynx.db"
 
 /*
  * Lynx will use a store to manage shortened URLs.
@@ -24,7 +24,7 @@ type Configuration struct {
 
 func DefaultConfiguration() *Configuration {
 	return &Configuration{
-		StoreType:             MapStoreType,
+		StoreType:             BoltStoreType,
 		StoreConnectionString: DefaultStoreConnectionString,
 		Port:                  DefaultServerPort,
 	}

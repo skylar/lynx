@@ -6,6 +6,9 @@ lynx
 *.so
 *.dylib
 
+# App files
+lynx.db
+
 # Test binary, built with `go test -c`
 *.test
 

@@ -98,6 +98,8 @@ func NewLynxServer(config *Configuration) *LynxServer {
 
 func createStore(config *Configuration) db.URLStore {
 	switch config.StoreType {
+	case BoltStoreType:
+		return db.NewBoltStore(config.StoreConnectionString)
 	case MapStoreType:
 		return db.NewMapStore()
 	default:

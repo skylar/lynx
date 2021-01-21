@@ -1,17 +1,16 @@
 package db
 
 import (
+	"os"
 	"testing"
 	"github.com/stretchr/testify/assert"
 )
 
-const testKey = "key";
-const testValue = "value";
+func TestBoltStore_SetGetClear(t *testing.T) {
+	testDbName := "bolt-test.db"
+	store := NewBoltStore(testDbName)
 
-func TestMapStore_SetGetClear(t *testing.T) {
-	store := NewMapStore();
-
-	err := store.Set(testKey, testValue);
+	err := store.Set(testKey, testValue)
 	assert.Nil(t, err)
 	assert.Equal(t, 1, store.Len())
 
@@ -21,4 +20,6 @@ func TestMapStore_SetGetClear(t *testing.T) {
 	err = store.Clear()
 	assert.Nil(t, err)
 	assert.Equal(t, 0, store.Len())
+
+	os.Remove(testDbName)
 }

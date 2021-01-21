@@ -9,7 +9,7 @@ import (
 func TestConfiguration(t *testing.T) {
 	config := DefaultConfiguration()
 
-	assert.Equal(t, MapStoreType, config.StoreType)
+	assert.Equal(t, BoltStoreType, config.StoreType)
 	assert.Equal(t, DefaultStoreConnectionString, config.StoreConnectionString)
 	assert.Equal(t, DefaultServerPort, config.Port)
 }
