@@ -5,6 +5,7 @@ import (
 
 	"lynx/internal/command"
 	"lynx/internal/db"
+	"lynx/internal/shortcuts"
 
 	"github.com/kataras/iris/v12"
 )
@@ -13,6 +14,7 @@ type LynxServer struct {
 	iris       *iris.Application
 	config     *Configuration
 	commandSet *command.CommandSet
+	shortener  *shortcuts.Controller
 	urlStore   db.URLStore
 }
 
@@ -40,6 +42,7 @@ func (s LynxServer) setupRouting() {
 		ctx.View("index.html")
 	})
 
+	// Commands
 	s.iris.Get("/list", func(ctx iris.Context) {
 		commandInfo := s.commandSet.GetCommandInfo()
 		ctx.ViewData("title", "Commands")
@@ -47,30 +50,57 @@ func (s LynxServer) setupRouting() {
 		ctx.ViewData("commands", commandInfo)
 		ctx.View("list.html")
 	})
-
 	s.iris.Get("/s/{searchText}", func(ctx iris.Context) {
 		url := s.commandSet.Resolve(ctx.Params().Get("searchText"))
 		ctx.Redirect(url.String(), iris.StatusTemporaryRedirect)
 	})
 
-	// URL Shortener - Not Implemented
+	// URL Shortener
 	s.iris.Get("/u/{shortcut}", func(ctx iris.Context) {
-		ctx.NotFound()
+		shortcut := ctx.Params().Get("shortcut")
+		url := s.urlStore.Get(shortcut)
+
+		if len(url) == 0 {
+			ctx.StatusCode(iris.StatusNotFound)
+			ctx.Writef("No entry for shortcut '%s'.", shortcut)
+			return
+		}
+		ctx.Redirect(url, iris.StatusTemporaryRedirect)
 	})
 	s.iris.Post("/api/shorten", func(ctx iris.Context) {
-		ctx.NotFound()
+		urlString := ctx.FormValue("url")
+		shortcode := ctx.FormValue("shortcode")
+		response := s.shortener.Shorten(urlString, shortcode)
+
+		ctx.StatusCode(response.StatusCode)
+		ctx.JSON(response.Data)
 	})
 }
 
 func NewLynxServer(config *Configuration) *LynxServer {
+	irisApp := iris.New()
+	store := createStore(config)
 	server := &LynxServer{
-		iris:       iris.New(),
+		iris:       irisApp,
 		config:     config,
 		commandSet: command.NewCommandSet(),
-		urlStore:   nil,
+		shortener: shortcuts.NewController(
+			irisApp.ConfigurationReadOnly().GetVHost(),
+			store,
+		),
+		urlStore: store,
 	}
 
 	server.setupContent()
 	server.setupRouting()
 	return server
+}
+
+func createStore(config *Configuration) db.URLStore {
+	switch config.StoreType {
+	case MapStoreType:
+		return db.NewMapStore()
+	default:
+		return nil
+	}
 }
