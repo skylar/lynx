@@ -9,5 +9,8 @@ lynx
 # Test binary, built with `go test -c`
 *.test
 
+# local DB files
+lynx.db
+
 # OS Artifacts
 .DS_Store
